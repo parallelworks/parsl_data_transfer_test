@@ -7,7 +7,7 @@ from parsl.app.app import bash_app
 print(parsl.__version__, flush = True)
 
 import parsl_utils
-from parsl_utils.config import config, exec_conf, read_args
+from parsl_utils.config import config, exec_conf
 from parsl_utils.data_provider import PWFile
 
 from workflow_apps import test_file_transfer
@@ -37,7 +37,6 @@ FILES_PER_POOL_TYPE: dict = {
 
 
 if __name__ == '__main__':
-    args = read_args()
 
     print('Loading Parsl Config', flush = True)
     parsl.load(config)
