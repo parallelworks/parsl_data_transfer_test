@@ -34,7 +34,7 @@ FILES_PER_POOL_TYPE: dict = {
     }
 }
 
-
+print(FILES_PER_POOL_TYPE)
 
 if __name__ == '__main__':
 
@@ -46,6 +46,7 @@ if __name__ == '__main__':
     
     # Test the PWRSyncStaging on the first executor:
     first_executor_label = list(exec_conf.keys())[0]
+    print(f'\n\nExecutor label: {first_executor_label}\nTesting PWRSyncStaging')
     fut = bash_app(test_file_transfer, executors=[first_executor_label])(
         inputs = [ 
             PWFile(
@@ -59,9 +60,11 @@ if __name__ == '__main__':
                     local_path = './PWRSyncStaging.out'
                 )
             ],
-            stdout = os.path.join('PWRSyncStaging.out'),
-            stderr = os.path.join('PWRSyncStaging.err')
-        )
+        stdout = 'log-PWRSyncStaging.out',
+        stderr = 'log-PWRSyncStaging.err'
+    )
+    
+    fut_list.append(fut)
     
     """
     Test data provider corresponding to POOL_TYPE. For example:
@@ -70,11 +73,11 @@ if __name__ == '__main__':
     """
     for exec_label, exec_conf_i in exec_conf.items():
         pool_type = exec_conf_i['POOL_TYPE']
-        print(f'Executor label: {exec_label}, Executor type {pool_type}')
+        print(f'\n\nExecutor label: {exec_label}\Testing type {pool_type}')
         fut = bash_app(test_file_transfer, executors=[exec_label])(
-            **FILES_PER_POOL_TYPE[pool_type]
-            stdout = f'{pool_type}.out',
-            stderr = f'{pool_type}.err'
+            **FILES_PER_POOL_TYPE[pool_type],
+            stdout = f'log-{pool_type}.out',
+            stderr = f'log-{pool_type}.err'
         )
         
         fut_list.append(fut)
