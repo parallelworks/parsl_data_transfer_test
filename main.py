@@ -14,8 +14,7 @@ from workflow_apps import test_file_transfer
 
 # tmp notes:
 # gcloud auth activate-service-account --key-file=MY_KEY_FILE.json
-# gs provider is not currently working not even after authenticating it manually
-
+# Running the above command on the controller also works for compute nodes
 
 FILES_PER_POOL_TYPE: dict = {
     'gclusterv2': {
@@ -28,6 +27,20 @@ FILES_PER_POOL_TYPE: dict = {
         'outputs': [
             PWFile(
                 url = 'gs://bucket/demoworkflows/parsl_demo/hello.out',
+                local_path = './hello.out'
+            )
+        ]
+    },
+    'pclusterv2': {
+        'inputs': [
+            PWFile(
+                url = 's3://bucket/demoworkflows/data_transfer_test/hello.in',
+                local_path = './hello.in'
+            )
+        ],
+        'outputs': [
+            PWFile(
+                url = 's3://bucket/demoworkflows/data_transfer_test/hello.out',
                 local_path = './hello.out'
             )
         ]
@@ -73,7 +86,7 @@ if __name__ == '__main__':
     """
     for exec_label, exec_conf_i in exec_conf.items():
         pool_type = exec_conf_i['POOL_TYPE']
-        print(f'\n\nExecutor label: {exec_label}\Testing type {pool_type}')
+        print(f'\n\nExecutor label: {exec_label}\nTesting type {pool_type}')
         fut = bash_app(test_file_transfer, executors=[exec_label])(
             **FILES_PER_POOL_TYPE[pool_type],
             stdout = f'log-{pool_type}.out',
