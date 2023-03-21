@@ -20,13 +20,13 @@ FILES_PER_POOL_TYPE: dict = {
     'gclusterv2': {
         'inputs': [
             PWFile(
-                url = 'gs://bucket/demoworkflows/parsl_demo/hello.in',
+                url = 'gs://demoworkflows/parsl_demo/hello.in',
                 local_path = './hello.in'
             )
         ],
         'outputs': [
             PWFile(
-                url = 'gs://bucket/demoworkflows/parsl_demo/hello.out',
+                url = 'gs://demoworkflows/parsl_demo/hello.out',
                 local_path = './hello.out'
             )
         ]
@@ -47,7 +47,7 @@ FILES_PER_POOL_TYPE: dict = {
     }
 }
 
-print(FILES_PER_POOL_TYPE)
+print(json.dumps(FILES_PER_POOL_TYPE, indent = 4), flush = True)
 
 if __name__ == '__main__':
 
