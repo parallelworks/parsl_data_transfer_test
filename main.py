@@ -34,13 +34,13 @@ FILES_PER_POOL_TYPE: dict = {
     'pclusterv2': {
         'inputs': [
             PWFile(
-                url = 's3://bucket/demoworkflows/data_transfer_test/hello.in',
+                url = 's3://demoworkflows/data_transfer_test/hello.in',
                 local_path = './hello.in'
             )
         ],
         'outputs': [
             PWFile(
-                url = 's3://bucket/demoworkflows/data_transfer_test/hello.out',
+                url = 's3://demoworkflows/data_transfer_test/hello.out',
                 local_path = './hello.out'
             )
         ]
