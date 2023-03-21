@@ -47,7 +47,7 @@ FILES_PER_POOL_TYPE: dict = {
     }
 }
 
-print(json.dumps(FILES_PER_POOL_TYPE, indent = 4), flush = True)
+print(FILES_PER_POOL_TYPE, flush = True)
 
 if __name__ == '__main__':
 
