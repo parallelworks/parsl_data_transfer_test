@@ -1,5 +1,5 @@
 # PARSL DATA TRANSFER TEST
-Workflow to test the custom data providers for PW clusters. The function `test_file_transfer` in `workflow_apps.py` is executed on every executor listed on the `executors.json` file. This function transfers files from their global path to their worker path (stage in) and viceversa (stage out). 
+Workflow to demonstrate the custom data providers for PW clusters. The function `test_file_transfer` in `workflow_apps.py` is executed on every executor defined in the `workflow.xml` file. This function transfers files from their global path to their worker path (stage in) and viceversa (stage out). 
 
 **Directory paths must end with `/`.** 
 

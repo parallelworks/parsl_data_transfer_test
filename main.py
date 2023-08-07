@@ -1,6 +1,4 @@
-import sys, os, json, time
-from random import randint
-import argparse
+import os
 
 import parsl
 from parsl.app.app import bash_app
@@ -8,6 +6,7 @@ print(parsl.__version__, flush = True)
 
 import parsl_utils
 from parsl_utils.config import config, exec_conf
+from parsl_utils.config import config, resource_labels, executor_dict
 from parsl_utils.data_provider import PWFile
 
 from workflow_apps import test_file_transfer
@@ -58,7 +57,7 @@ if __name__ == '__main__':
     fut_list: list = []
     
     # Test the PWRSyncStaging on the first executor:
-    first_executor_label = list(exec_conf.keys())[0]
+    first_executor_label = resource_labels[0]
     print(f'\n\nExecutor label: {first_executor_label}\nTesting PWRSyncStaging')
     fut = bash_app(test_file_transfer, executors=[first_executor_label])(
         inputs = [ 
@@ -84,13 +83,13 @@ if __name__ == '__main__':
     - gclusterv2: PWGsutil
     - pclusterv2: PWAWSS3
     """
-    for exec_label, exec_conf_i in exec_conf.items():
-        pool_type = exec_conf_i['POOL_TYPE']
-        print(f'\n\nExecutor label: {exec_label}\nTesting type {pool_type}')
-        fut = bash_app(test_file_transfer, executors=[exec_label])(
-            **FILES_PER_POOL_TYPE[pool_type],
-            stdout = f'log-{pool_type}.out',
-            stderr = f'log-{pool_type}.err'
+    for executor_label in resource_labels:
+        resource_type = executor_dict[executor_label]['resource']['type']
+        print(f'\n\nExecutor label: {executor_label}\nTesting type {resource_type}')
+        fut = bash_app(test_file_transfer, executors=[executor_label])(
+            **FILES_PER_POOL_TYPE[resource_type],
+            stdout = f'log-{resource_type}.out',
+            stderr = f'log-{resource_type}.err'
         )
         
         fut_list.append(fut)
