@@ -3,7 +3,7 @@
     "branch": "main",
     "dir": ".",
     "xml": "workflow.xml",
-    "thumbnail": "thumb/parsl.png",
+    "thumbnail": "parsl.png",
     "readme": "README.md"
 }
 
